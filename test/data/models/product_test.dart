@@ -5,7 +5,7 @@ import 'package:product_list/data/models/product.dart';
 import '../../utils/fixtures.dart';
 
 void main() {
-  group('product model test', () {
+  group('product model', () {
     test('create instance', () async {
       // act
       const sut = Product(
