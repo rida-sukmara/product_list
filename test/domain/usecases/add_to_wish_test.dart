@@ -27,16 +27,16 @@ void main() {
   });
 
   group('add to wish usecase', () {
-    test('should return product with add to wishlist true', () async {
+    test('should return product with add to wishlist', () async {
       // arrange
       when(mockProductRepository.addToWish(product: product))
-          .thenAnswer((_) async => const Right(true));
+          .thenAnswer((_) async => Right(product));
       // act
       final actual = await sut(product);
       // assert
       verify(mockProductRepository.addToWish(product: product));
       verifyNoMoreInteractions(mockProductRepository);
-      expect(actual, const Right(true));
+      expect(actual, Right(product));
     });
   });
 }

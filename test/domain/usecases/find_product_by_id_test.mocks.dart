@@ -44,18 +44,19 @@ class MockIProductRepository extends _i1.Mock
                   _FakeEither_0<_i5.Failure, _i6.Product>()))
           as _i4.Future<_i2.Either<_i5.Failure, _i6.Product>>);
   @override
-  _i4.Future<_i2.Either<_i5.Failure, bool>> addToWish({_i6.Product? product}) =>
+  _i4.Future<_i2.Either<_i5.Failure, _i6.Product>> addToWish(
+          {_i6.Product? product}) =>
       (super.noSuchMethod(
               Invocation.method(#addToWish, [], {#product: product}),
-              returnValue: Future<_i2.Either<_i5.Failure, bool>>.value(
-                  _FakeEither_0<_i5.Failure, bool>()))
-          as _i4.Future<_i2.Either<_i5.Failure, bool>>);
+              returnValue: Future<_i2.Either<_i5.Failure, _i6.Product>>.value(
+                  _FakeEither_0<_i5.Failure, _i6.Product>()))
+          as _i4.Future<_i2.Either<_i5.Failure, _i6.Product>>);
   @override
-  _i4.Future<_i2.Either<_i5.Failure, bool>> removeFromWish(
+  _i4.Future<_i2.Either<_i5.Failure, _i6.Product>> removeFromWish(
           {_i6.Product? product}) =>
       (super.noSuchMethod(
               Invocation.method(#removeFromWish, [], {#product: product}),
-              returnValue: Future<_i2.Either<_i5.Failure, bool>>.value(
-                  _FakeEither_0<_i5.Failure, bool>()))
-          as _i4.Future<_i2.Either<_i5.Failure, bool>>);
+              returnValue: Future<_i2.Either<_i5.Failure, _i6.Product>>.value(
+                  _FakeEither_0<_i5.Failure, _i6.Product>()))
+          as _i4.Future<_i2.Either<_i5.Failure, _i6.Product>>);
 }
