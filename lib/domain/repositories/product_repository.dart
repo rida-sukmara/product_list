@@ -1,6 +1,6 @@
 import 'package:product_list/core/utils/i_network_info.dart';
 import 'package:product_list/data/datasource/local/i_product_local_datasource.dart';
-import 'package:product_list/data/datasource/remote/i_product_remote_datasource.dart';
+import 'package:product_list/data/datasource/remote/product_remote_datasource.dart';
 import 'package:product_list/data/models/product.dart';
 import 'package:product_list/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
@@ -8,7 +8,7 @@ import 'package:product_list/domain/repositories/i_product_repository.dart';
 
 class ProductRepository extends IProductRepository {
   final IProductLocalDatasource localDatasource;
-  final IProductRemoteDatasource remoteDatasource;
+  final ProductRemoteDatasource remoteDatasource;
   final INetworkInfo networkInfo;
 
   ProductRepository(

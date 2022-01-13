@@ -8,7 +8,7 @@ import 'package:mockito/mockito.dart' as _i1;
 import 'package:product_list/core/utils/i_network_info.dart' as _i6;
 import 'package:product_list/data/datasource/local/i_product_local_datasource.dart'
     as _i3;
-import 'package:product_list/data/datasource/remote/i_product_remote_datasource.dart'
+import 'package:product_list/data/datasource/remote/product_remote_datasource.dart'
     as _i5;
 import 'package:product_list/data/models/product.dart' as _i2;
 
@@ -59,12 +59,12 @@ class MockIProductLocalDatasource extends _i1.Mock
           as _i4.Future<_i2.Product>);
 }
 
-/// A class which mocks [IProductRemoteDatasource].
+/// A class which mocks [ProductRemoteDatasource].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIProductRemoteDatasource extends _i1.Mock
-    implements _i5.IProductRemoteDatasource {
-  MockIProductRemoteDatasource() {
+class MockProductRemoteDatasource extends _i1.Mock
+    implements _i5.ProductRemoteDatasource {
+  MockProductRemoteDatasource() {
     _i1.throwOnMissingStub(this);
   }
 

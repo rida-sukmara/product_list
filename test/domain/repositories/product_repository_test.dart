@@ -4,17 +4,17 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:product_list/core/utils/i_network_info.dart';
 import 'package:product_list/data/datasource/local/i_product_local_datasource.dart';
-import 'package:product_list/data/datasource/remote/i_product_remote_datasource.dart';
+import 'package:product_list/data/datasource/remote/product_remote_datasource.dart';
 import 'package:product_list/data/models/product.dart';
 import 'package:product_list/domain/repositories/product_repository.dart';
 
 import 'product_repository_test.mocks.dart';
 
 @GenerateMocks(
-    [IProductLocalDatasource, IProductRemoteDatasource, INetworkInfo])
+    [IProductLocalDatasource, ProductRemoteDatasource, INetworkInfo])
 void main() {
   late IProductLocalDatasource mockLocalDatasource;
-  late IProductRemoteDatasource mockRemoteDatasource;
+  late ProductRemoteDatasource mockRemoteDatasource;
   late INetworkInfo mockNetworkInfo;
   late Product product;
   late Product productOnWish;
@@ -24,7 +24,7 @@ void main() {
 
   setUp(() {
     mockLocalDatasource = MockIProductLocalDatasource();
-    mockRemoteDatasource = MockIProductRemoteDatasource();
+    mockRemoteDatasource = MockProductRemoteDatasource();
     mockNetworkInfo = MockINetworkInfo();
     
     product = const Product(
