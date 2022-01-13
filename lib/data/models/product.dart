@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 
 class Product extends Equatable {
+  static const tableName = 'tbl_product';
+
   final String id;
   final String name;
   final String description;
@@ -36,7 +38,7 @@ class Product extends Equatable {
       'description': description,
       'price': price,
       'image': image,
-      'isOnWishlist': isOnWishlist
+      'isOnWishlist': isOnWishlist ? 1 : 0
     };
   }
 
