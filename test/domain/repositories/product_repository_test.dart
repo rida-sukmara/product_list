@@ -50,8 +50,9 @@ void main() {
         networkInfo: mockNetworkInfo);
   });
   group('isOnline', () {
-    setUp(() {
+    setUp(() async {
       when(mockNetworkInfo.isConnected()).thenAnswer((_) async => true);
+      when(mockLocalDatasource.all()).thenAnswer((_) async => listProduct);
     });
     test('connection checking', () async {
       // arrange
@@ -77,16 +78,16 @@ void main() {
       expect(actual, Right(listProduct));
     });
 
-    test('caching product when fetching success', () async {
+    test('caching product when fetching success and force refresh', () async {
       // arrange
       when(mockRemoteDatasource.all()).thenAnswer((_) async => listProduct);
+      when(mockLocalDatasource.all()).thenAnswer((_) async => listProduct);
       when(mockLocalDatasource.cache(items: listProduct))
           .thenAnswer((_) async => true);
       // act
-      final actual = await sut.all();
+      final actual = await sut.all(true);
       // assert
       verify(mockLocalDatasource.cache(items: listProduct));
-      verifyNoMoreInteractions(mockLocalDatasource);
       expect(actual, Right(listProduct));
     });
 

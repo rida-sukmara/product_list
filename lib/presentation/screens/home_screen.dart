@@ -59,7 +59,11 @@ class HomeScreen extends StatelessWidget {
                         child: Text("No product available."),
                       );
                     }
-                    return ProductList(items: state.items);
+                    return RefreshIndicator(
+                        child: ProductList(items: state.items, callback: () { _productCubit.getProducts(); },),
+                        onRefresh: () {
+                          return _productCubit.getProducts();
+                        });
                   }
 
                   return Container();
@@ -73,30 +77,31 @@ class HomeScreen extends StatelessWidget {
 
 class ProductList extends StatelessWidget {
   final List<Product> items;
-
-  const ProductList({required this.items, Key? key}) : super(key: key);
+  final Function callback;
+  const ProductList({required this.items, required this.callback, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
         itemCount: items.length,
         itemBuilder: (_, index) {
-          return ProductCard(product: items[index]);
+          return ProductCard(product: items[index], callback: callback);
         });
   }
 }
 
 class ProductCard extends StatelessWidget {
   final Product product;
+  final Function callback;
 
-  const ProductCard({required this.product, Key? key}) : super(key: key);
+  const ProductCard({required this.product, required this.callback, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
           Navigator.pushNamed(context, ProductDetailScreen.route,
-              arguments: ProductDetailArgs(product: product));
+              arguments: ProductDetailArgs(product: product)).then((_) => callback());
         },
         child: Container(
             margin: const EdgeInsets.symmetric(vertical: 4),
@@ -112,7 +117,7 @@ class ProductCard extends StatelessWidget {
                 padding: const EdgeInsets.all(8),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: Image.network(product.image + "?${product.id}",
+                  child: Image.network(product.image + "?${product.name}",
                       fit: BoxFit.cover),
                 ),
               ),
@@ -132,13 +137,19 @@ class ProductCard extends StatelessWidget {
                     ),
                     Text(
                       product.description,
-                      maxLines: 3,
+                      maxLines: 2,
                       style: const TextStyle(color: Colors.grey, fontSize: 12),
                     ),
                     Text(
                       "USD ${product.price}",
                       style: const TextStyle(fontSize: 12, color: Colors.green),
-                    )
+                    ),
+                    if (product.isOnWishlist)
+                      const Text(
+                        "This product on wish list",
+                        style:
+                            TextStyle(fontSize: 11, color: Colors.orangeAccent),
+                      )
                   ],
                 ),
               ))

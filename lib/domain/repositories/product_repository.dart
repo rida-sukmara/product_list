@@ -17,10 +17,14 @@ class ProductRepository extends IProductRepository {
       required this.networkInfo});
 
   @override
-  Future<Either<Failure, List<Product>>> all() async {
+  Future<Either<Failure, List<Product>>> all([bool? forceRefresh]) async {
     if (await networkInfo.isConnected()) {
       try {
         final result = await remoteDatasource.all();
+        final cached = await localDatasource.all();
+        if (cached.isNotEmpty && forceRefresh == false) {
+          return Right(cached);
+        }
         await localDatasource.cache(items: result);
         return Right(result);
       } on ServerException {
