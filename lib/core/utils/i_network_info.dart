@@ -1,3 +1,3 @@
 abstract class INetworkInfo {
-  bool isConnected();
+  Future<bool> isConnected();
 }

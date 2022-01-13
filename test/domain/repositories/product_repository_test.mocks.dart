@@ -89,6 +89,7 @@ class MockINetworkInfo extends _i1.Mock implements _i6.INetworkInfo {
   }
 
   @override
-  bool isConnected() => (super.noSuchMethod(Invocation.method(#isConnected, []),
-      returnValue: false) as bool);
+  _i4.Future<bool> isConnected() =>
+      (super.noSuchMethod(Invocation.method(#isConnected, []),
+          returnValue: Future<bool>.value(false)) as _i4.Future<bool>);
 }

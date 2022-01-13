@@ -18,7 +18,7 @@ class ProductRepository extends IProductRepository {
 
   @override
   Future<Either<Failure, List<Product>>> all() async {
-    if (networkInfo.isConnected()) {
+    if (await networkInfo.isConnected()) {
       try {
         final result = await remoteDatasource.all();
         await localDatasource.cache(items: result);
@@ -38,7 +38,7 @@ class ProductRepository extends IProductRepository {
 
   @override
   Future<Either<Failure, Product>> findBy({required String id}) async {
-    if (networkInfo.isConnected()) {
+    if (await networkInfo.isConnected()) {
       final result = await remoteDatasource.findBy(id: id);
       return Right(result);
     } else {

@@ -51,7 +51,7 @@ void main() {
   });
   group('isOnline', () {
     setUp(() {
-      when(mockNetworkInfo.isConnected()).thenReturn(true);
+      when(mockNetworkInfo.isConnected()).thenAnswer((_) async => true);
     });
     test('connection checking', () async {
       // arrange
@@ -115,7 +115,7 @@ void main() {
 
   group('isOffline', () {
     setUp(() async {
-      when(mockNetworkInfo.isConnected()).thenReturn(false);
+      when(mockNetworkInfo.isConnected()).thenAnswer((_) async => false);
     });
     test('fetching from local storage', () async {
       // asert
