@@ -27,7 +27,8 @@ class Product extends Equatable {
         name: json['name'],
         description: json['description'],
         price: json['price'],
-        image: json['image']);
+        image: json['image'],
+        isOnWishlist: json['isOnWishlist'] == 1);
   }
 
   Map<String, dynamic> toJson() {

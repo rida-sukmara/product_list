@@ -45,65 +45,76 @@ class ProductDetailScreen extends StatelessWidget {
         ),
         body: BlocProvider(
           create: (_) => _productCubit,
-          child: BlocListener<ProductCubit, ProductState>(
-            listener: (_, state) {
-              if (state is ProductWishComplate) {
-                product = state.product;
-              }
-            },
-            child: Container(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ListView(
-                  children: [
-                    SizedBox(
-                      width: double.infinity,
-                      height: 200,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image.network(
-                            "${product.image}?${product.name}${product.id}",
-                            fit: BoxFit.cover),
-                      ),
+          child: Container(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ListView(
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    height: 200,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.network(
+                          "${product.image}?${product.name}${product.id}",
+                          fit: BoxFit.cover),
                     ),
-                    const SizedBox(height: 12),
-                    Text(
-                      product.name,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    product.name,
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(product.description),
+                  const SizedBox(height: 16),
+                  Container(
+                    alignment: Alignment.center,
+                    width: double.infinity,
+                    child: Text(
+                      product.price,
                       style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
+                          color: Colors.green,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 16),
-                    Text(product.description),
-                    const SizedBox(height: 16),
-                    Flex(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      direction: Axis.horizontal,
-                      children: [
-                        Text(
-                          product.price,
-                          style: const TextStyle(
-                              color: Colors.green,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    Expanded(
-                      child: MaterialButton(
-                        onPressed: () {
-                          _productCubit.toggleWish(product: product);
-                        },
-                        color: Colors.deepOrange,
-                        textColor: Colors.white,
-                        child: Text(product.isOnWishlist
-                            ? "Remove from Wish list"
-                            : "Add to wish list"),
-                      ),
-                    )
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 16),
+                  BlocBuilder<ProductCubit, ProductState>(
+                    builder: (_, state) {
+
+                      Product _latestProduct = product;
+
+                      if (state is ProductAddToWish) {
+                        _latestProduct = state.product;
+                      }
+
+                      if (state is ProductRemoveFromWish) {
+                        _latestProduct = state.product;
+                      }
+
+                      if (state is ProductWishComplate) {
+                        _latestProduct = state.product;
+                      }
+
+                      return SizedBox(
+                        width: double.infinity,
+                        child: MaterialButton(
+                          onPressed: () {
+                            _productCubit.toggleWish(product: _latestProduct);
+                          },
+                          color: Colors.deepOrange,
+                          textColor: Colors.white,
+                          child: Text(_latestProduct.isOnWishlist
+                              ? "Remove from Wish list"
+                              : "Add to wish list"),
+                        ),
+                      );
+                    },
+                  )
+                ],
               ),
             ),
           ),

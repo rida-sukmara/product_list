@@ -19,7 +19,8 @@ class ProductLocalDatasource implements IProductLocalDatasource {
   Future<List<Product>> all() async {
     final db = await databaseHelper.database;
     final List<Map<String, dynamic>> maps = await db.query(Product.tableName);
-    return List.generate(maps.length, (index) => Product.fromJson(maps[index]));
+    final items = List.generate(maps.length, (index) => Product.fromJson(maps[index]));
+    return items;
   }
 
   @override
@@ -38,17 +39,11 @@ class ProductLocalDatasource implements IProductLocalDatasource {
   }
 
   @override
-  Future<Product> findBy({required String id}) {
-    // TODO: implement findBy
-    throw UnimplementedError();
-  }
-
-  @override
   Future<Product> removeFromWish({required Product product}) async {
     final db = await databaseHelper.database;
-    final productAdded = Product.copyWith(product: product, isOnWish: false);
-    await db.update(Product.tableName, productAdded.toJson(),
+    final productRemoved = Product.copyWith(product: product, isOnWish: false);
+    await db.update(Product.tableName, productRemoved.toJson(),
         where: 'id = ?', whereArgs: [product.id]);
-    return productAdded;
+    return productRemoved;
   }
 }

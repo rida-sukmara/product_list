@@ -62,7 +62,7 @@ class HomeScreen extends StatelessWidget {
                     return RefreshIndicator(
                         child: ProductList(items: state.items, callback: () { _productCubit.getProducts(); },),
                         onRefresh: () {
-                          return _productCubit.getProducts();
+                          return _productCubit.getProducts(true);
                         });
                   }
 

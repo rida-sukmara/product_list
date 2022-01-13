@@ -9,8 +9,8 @@ part 'product_state.dart';
 class ProductCubit extends Cubit<ProductState> {
   late final IProductRepository _productRepository;
 
-  ProductCubit({required IProductRepository repository})
-      : super(ProductInitial()) {
+  ProductCubit({required IProductRepository repository, ProductState? initialState})
+      : super(initialState ?? ProductInitial()) {
     _productRepository = repository;
     getProducts();
   }
@@ -18,30 +18,32 @@ class ProductCubit extends Cubit<ProductState> {
   Future<void> toggleWish({required Product product}) async {
     try {
       if (product.isOnWishlist) {
+        emit(ProductRemoveFromWish(product));
         final result =
             await _productRepository.removeFromWish(product: product);
         if (result.isRight()) {
-          emit(ProductAddToWish(product));
+          emit(ProductWishComplate(result.getOrElse(() => product)));
         } else {
           emit(const ProductWishFailure(message: "Failed while saving data."));
         }
       } else {
+        emit(ProductAddToWish(product));
         final result = await _productRepository.addToWish(product: product);
         if (result.isRight()) {
-          emit(ProductAddToWish(product));
+          emit(ProductWishComplate(result.getOrElse(() => product)));
         } else {
           emit(const ProductWishFailure(message: "Failed while saving data."));
         }
       }
-    } catch (_) {
+    } catch (e) {
       emit(const ProductWishFailure(message: "Failed while saving data."));
     }
   }
 
-  Future<void> getProducts() async {
+  Future<void> getProducts([bool forceFetching = false]) async {
     try {
       emit(ProductLoading());
-      final result = await _productRepository.all();
+      final result = await _productRepository.all(forceFetching);
       if (result.isRight()) {
         emit(ProductLoaded(items: result.getOrElse(() => [])));
       } else {
@@ -55,7 +57,6 @@ class ProductCubit extends Cubit<ProductState> {
         }
       }
     } catch (e) {
-      print("product_cubit:all:e$e");
       emit(const ProductFailure(message: "Oops... something when wrong!"));
     }
   }
