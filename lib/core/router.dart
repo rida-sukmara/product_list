@@ -5,7 +5,7 @@ import 'package:product_list/presentation/screens/product_detail_screen.dart';
 import 'package:product_list/presentation/screens/splash_screen.dart';
 
 Map<String,WidgetBuilder> routes = {
-  HomeScreen.route: (context) => HomeScreen(),
-  SplashScreen.route: (context) => SplashScreen(),
-  ProductDetailScreen.route: (context) => ProductDetailScreen()
+  HomeScreen.route: (_) => HomeScreen(),
+  SplashScreen.route: (_) => const SplashScreen(),
+  ProductDetailScreen.route: (_) => ProductDetailScreen()
 };

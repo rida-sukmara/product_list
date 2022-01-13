@@ -49,11 +49,12 @@ class ProductDetailScreen extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: ListView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
                     width: double.infinity,
-                    height: 200,
+                    height: 240,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Image.network(
@@ -68,42 +69,54 @@ class ProductDetailScreen extends StatelessWidget {
                         fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 16),
-                  Text(product.description),
-                  const SizedBox(height: 16),
-                  Container(
-                    alignment: Alignment.center,
-                    width: double.infinity,
-                    child: Text(
-                      product.price,
-                      style: const TextStyle(
-                          color: Colors.green,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                  Expanded(
+                      flex: 1,
+                      child: Column(
+                        children: [
+                          Text(product.description),
+                          const SizedBox(height: 16),
+                          Container(
+                            alignment: Alignment.center,
+                            width: double.infinity,
+                            child: Text(
+                              "USD ${product.price}",
+                              style: const TextStyle(
+                                  color: Colors.green,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      )),
                   const SizedBox(height: 16),
                   BlocBuilder<ProductCubit, ProductState>(
                     builder: (_, state) {
+                      bool _disabledButton = false;
 
                       Product _latestProduct = product;
 
                       if (state is ProductAddToWish) {
                         _latestProduct = state.product;
+                        _disabledButton = true;
                       }
 
                       if (state is ProductRemoveFromWish) {
                         _latestProduct = state.product;
+                        _disabledButton = true;
                       }
 
                       if (state is ProductWishComplate) {
                         _latestProduct = state.product;
+                        _disabledButton = false;
                       }
 
                       return SizedBox(
                         width: double.infinity,
                         child: MaterialButton(
                           onPressed: () {
-                            _productCubit.toggleWish(product: _latestProduct);
+                            if (!_disabledButton) {
+                              _productCubit.toggleWish(product: _latestProduct);
+                            }
                           },
                           color: Colors.deepOrange,
                           textColor: Colors.white,
