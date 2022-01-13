@@ -38,11 +38,6 @@ class MockIProductLocalDatasource extends _i1.Mock
               returnValue: Future<List<_i2.Product>>.value(<_i2.Product>[]))
           as _i4.Future<List<_i2.Product>>);
   @override
-  _i4.Future<_i2.Product> findBy({String? id}) =>
-      (super.noSuchMethod(Invocation.method(#findBy, [], {#id: id}),
-              returnValue: Future<_i2.Product>.value(_FakeProduct_0()))
-          as _i4.Future<_i2.Product>);
-  @override
   _i4.Future<bool> cache({List<_i2.Product>? items}) =>
       (super.noSuchMethod(Invocation.method(#cache, [], {#items: items}),
           returnValue: Future<bool>.value(false)) as _i4.Future<bool>);

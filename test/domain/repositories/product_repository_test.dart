@@ -90,28 +90,6 @@ void main() {
       verify(mockLocalDatasource.cache(items: listProduct));
       expect(actual, Right(listProduct));
     });
-
-    test('find by id check connection', () async {
-      // arrange
-      when(mockRemoteDatasource.findBy(id: product.id))
-          .thenAnswer((_) async => product);
-      // act
-      await sut.findBy(id: product.id);
-      // assert
-      verify(mockNetworkInfo.isConnected());
-    });
-
-    test('find by id', () async {
-      // arrange
-      when(mockRemoteDatasource.findBy(id: product.id))
-          .thenAnswer((_) async => product);
-      // act
-      final actual = await sut.findBy(id: product.id);
-      // assert
-      verify(mockRemoteDatasource.findBy(id: product.id));
-      verifyNoMoreInteractions(mockRemoteDatasource);
-      expect(actual, Right(product));
-    });
   });
 
   group('isOffline', () {
@@ -127,16 +105,6 @@ void main() {
       verify(mockLocalDatasource.all());
       expect(actual, Right(listProduct));
     });
-
-    test('find by id', () async {
-      // arrange
-      when(mockLocalDatasource.findBy(id: product.id)).thenAnswer((_) async => product);
-      // act
-      final actual = await sut.findBy(id: product.id);
-      // assert
-      verifyZeroInteractions(mockRemoteDatasource);
-      expect(actual, Right(product));
-     });
   });
 
   group('add to wish list', () {

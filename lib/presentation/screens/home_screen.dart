@@ -117,7 +117,7 @@ class ProductCard extends StatelessWidget {
                 padding: const EdgeInsets.all(8),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: Image.network(product.image + "?${product.name}",
+                  child: Image.network("${product.image}?${product.name}${product.id}",
                       fit: BoxFit.cover),
                 ),
               ),

@@ -8,8 +8,11 @@ class ProductLocalDatasource implements IProductLocalDatasource {
 
   @override
   Future<Product> addToWish({required Product product}) async {
-    // TODO: implement cache
-    throw UnimplementedError();
+    final db = await databaseHelper.database;
+    final productAdded = Product.copyWith(product: product, isOnWish: true);
+    await db.update(Product.tableName, productAdded.toJson(),
+        where: 'id = ?', whereArgs: [product.id]);
+    return productAdded;
   }
 
   @override
@@ -41,8 +44,11 @@ class ProductLocalDatasource implements IProductLocalDatasource {
   }
 
   @override
-  Future<Product> removeFromWish({required Product product}) {
-    // TODO: implement removeFromWish
-    throw UnimplementedError();
+  Future<Product> removeFromWish({required Product product}) async {
+    final db = await databaseHelper.database;
+    final productAdded = Product.copyWith(product: product, isOnWish: false);
+    await db.update(Product.tableName, productAdded.toJson(),
+        where: 'id = ?', whereArgs: [product.id]);
+    return productAdded;
   }
 }

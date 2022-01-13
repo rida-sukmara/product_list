@@ -15,6 +15,29 @@ class ProductCubit extends Cubit<ProductState> {
     getProducts();
   }
 
+  Future<void> toggleWish({required Product product}) async {
+    try {
+      if (product.isOnWishlist) {
+        final result =
+            await _productRepository.removeFromWish(product: product);
+        if (result.isRight()) {
+          emit(ProductAddToWish(product));
+        } else {
+          emit(const ProductWishFailure(message: "Failed while saving data."));
+        }
+      } else {
+        final result = await _productRepository.addToWish(product: product);
+        if (result.isRight()) {
+          emit(ProductAddToWish(product));
+        } else {
+          emit(const ProductWishFailure(message: "Failed while saving data."));
+        }
+      }
+    } catch (_) {
+      emit(const ProductWishFailure(message: "Failed while saving data."));
+    }
+  }
+
   Future<void> getProducts() async {
     try {
       emit(ProductLoading());

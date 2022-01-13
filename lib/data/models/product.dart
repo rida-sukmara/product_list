@@ -16,8 +16,7 @@ class Product extends Equatable {
       required this.description,
       required this.price,
       required this.image,
-      this.isOnWishlist = false
-      });
+      this.isOnWishlist = false});
 
   @override
   List<Object?> get props => [id, name, description, price, image];
@@ -40,6 +39,16 @@ class Product extends Equatable {
       'image': image,
       'isOnWishlist': isOnWishlist ? 1 : 0
     };
+  }
+
+  static Product copyWith({required Product product, bool isOnWish = false}) {
+    return Product(
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        image: product.image,
+        isOnWishlist: isOnWish);
   }
 
   @override

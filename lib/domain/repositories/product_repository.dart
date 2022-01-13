@@ -41,21 +41,6 @@ class ProductRepository extends IProductRepository {
   }
 
   @override
-  Future<Either<Failure, Product>> findBy({required String id}) async {
-    if (await networkInfo.isConnected()) {
-      final result = await remoteDatasource.findBy(id: id);
-      return Right(result);
-    } else {
-      try {
-        final result = await localDatasource.findBy(id: id);
-        return Right(result);
-      } catch (_) {
-        return Left(CacheFailure());
-      }
-    }
-  }
-
-  @override
   Future<Either<Failure, Product>> addToWish({required Product product}) async {
     try {
       final result = await localDatasource.addToWish(product: product);

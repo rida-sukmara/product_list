@@ -38,3 +38,7 @@ class ProductRemoveFromWish extends WithProduct {
 class ProductWishComplate extends WithProduct {
   const ProductWishComplate(Product product) : super(product: product);
 }
+class ProductWishFailure extends ProductState {
+  final String message;
+  const ProductWishFailure({required this.message});
+}
